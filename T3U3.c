@@ -14,8 +14,8 @@
 #define I2C_SCL  1   // Pino GPIO5 = SCL (ajuste conforme sua ligação)
 
 // --- Credenciais da Rede Wi-Fi ---
-#define WIFI_SSID       "PRETA_INFOWAY"       // Nome da sua rede Wi-Fi (SSID)
-#define WIFI_PASSWORD   "dpsouza1"      // Senha da sua rede Wi-Fi
+#define WIFI_SSID       "tarefa-mqtt"       // Nome da sua rede Wi-Fi (SSID)
+#define WIFI_PASSWORD   "laica@2025"        // Senha da sua rede Wi-Fi
 
 // --- Configurações do Broker MQTT ---
 #define MQTT_SERVER     "mqtt.iot.natal.br"  // Endereço IP ou hostname do seu broker MQTT
@@ -31,12 +31,17 @@
 // Tópico para publicar status (ex: enviar um timestamp ou leitura de sensor)
 #define MQTT_TOPIC_STATUS  "ha/desafio15/fabricio.silva/mpu6050"
 
+#define MQTT_PUBLISH_INTERVAL_MS 10000 
+
 #define NTP_SERVER          "pool.ntp.br" // Melhor usar o pool brasileiro
 #define NTP_TIMEOUT_MS      5000
 #define NTP_RESYNC_INTERVAL_MS 3600000 // Ressincronizar a cada 1 hora (3600 * 1000)
 
 // Fuso horário de Brasília (UTC-3)
 #define BRASILIA_OFFSET_SECONDS (-3 * 3600)
+
+// LED envio
+#define LED_PIN 11
 
 // 2. Variáveis com os dados que você quer inserir no JSON
 const char* team = "desafio15";
@@ -45,10 +50,14 @@ const char* ssid = WIFI_SSID;
 const char* sensor = "MPU-6050";
 
 void on_message_received(const char* topic, const char* payload);
+void configura_led(int pin);
+void pisca_led(int pin, int vezes, int delay_ms);
 
 int main() {
     stdio_init_all();
     sleep_ms(2000); // espera inicial para abrir monitor serial
+
+    configura_led(LED_PIN);
 
     printf("Iniciando I2C...\n");
 
@@ -156,7 +165,7 @@ int main() {
             } 
             
             // Publica a cada 10 segundos
-            if (now_ms - last_publish_time > 10000) {
+            if (now_ms - last_publish_time > MQTT_PUBLISH_INTERVAL_MS) {
                 last_publish_time = now_ms;
                 
                 static char message[512];
@@ -186,6 +195,7 @@ int main() {
                         printf("Falha ao tentar publicar mensagem.\n");
                     } else {
                         printf("Mensagem enviada para a fila de publicação.\n");
+                        pisca_led(LED_PIN, 1, 100); // Pisca o LED uma vez para indicar envio
                     }
                 } else {
                     printf("Falha na leitura do MPU6050, publicação cancelada.\n");
@@ -197,10 +207,26 @@ int main() {
         }
 
         // Um pequeno sleep para a CPU "respirar", não afeta a precisão do tempo.
-        sleep_ms(100); 
+        //sleep_ms(100); 
     } 
 
     return 0;
+}
+
+//Configura o LED
+void configura_led(int pin) {
+    gpio_init(pin);
+    gpio_set_dir(pin, GPIO_OUT);
+    gpio_put(pin, 0); // LED inicialmente desligado
+}
+
+void pisca_led(int pin, int vezes, int delay_ms) {
+    for (int i = 0; i < vezes; i++) {
+        gpio_put(pin, 1); // Liga o LED
+        sleep_ms(delay_ms);
+        gpio_put(pin, 0); // Desliga o LED
+        sleep_ms(delay_ms);
+    }
 }
 
 // Callback chamado quando chega uma mensagem MQTT
