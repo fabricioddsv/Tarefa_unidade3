@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <math.h>   // <-- ADICIONADO: Para a função fabsf() (valor absoluto de float)
+#include <string.h>
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
 #include "mpu6050_handler.h"
@@ -31,7 +33,10 @@
 // Tópico para publicar status (ex: enviar um timestamp ou leitura de sensor)
 #define MQTT_TOPIC_STATUS  "ha/desafio15/fabricio.silva/mpu6050"
 
-#define MQTT_PUBLISH_INTERVAL_MS 10000 
+// --- Configurações de Envio MQTT ---
+#define MQTT_PUBLISH_INTERVAL_FAST_MS 1000 // <-- ALTERADO: Envio rápido (10s) se houver mudança
+#define MQTT_PUBLISH_INTERVAL_SLOW_MS 60000 // <-- ADICIONADO: Envio lento (60s) se não houver mudança
+#define SENSOR_CHANGE_THRESHOLD 0.05 
 
 #define NTP_SERVER          "pool.ntp.br" // Melhor usar o pool brasileiro
 #define NTP_TIMEOUT_MS      5000
@@ -52,6 +57,9 @@ const char* sensor = "MPU-6050";
 void on_message_received(const char* topic, const char* payload);
 void configura_led(int pin);
 void pisca_led(int pin, int vezes, int delay_ms);
+// <-- ADICIONADO: Função para verificar se os dados do sensor mudaram significativamente
+bool has_sensor_data_changed(mpu6050_data_t* current, mpu6050_data_t* previous, float threshold);
+
 
 int main() {
     stdio_init_all();
@@ -77,7 +85,11 @@ int main() {
 
     printf("MPU6050 inicializado com sucesso!\n");
 
-    mpu6050_data_t data;
+    mpu6050_data_t current_data; 
+    // <-- ADICIONADO: Estrutura para armazenar os últimos dados publicados
+    static mpu6050_data_t last_published_data;
+    // Inicializa com zeros para a primeira comparação
+    memset(&last_published_data, 0, sizeof(mpu6050_data_t));
 
     // 1. Configurar a biblioteca MQTT
     mqtt_config_t config = {
@@ -164,41 +176,65 @@ int main() {
                 }
             } 
             
-            // Publica a cada 10 segundos
-            if (now_ms - last_publish_time > MQTT_PUBLISH_INTERVAL_MS) {
+            // <-- LÓGICA DE PUBLICAÇÃO MODIFICADA ---
+            
+            // 1. Lê os dados do sensor
+            if (!mpu6050_read_data(&current_data)) {
+                 printf("Falha na leitura do MPU6050, pulando ciclo.\n");
+                 sleep_ms(1000); // Evita spam de erro
+                 continue;
+            }
+
+            // 2. Verifica se os dados mudaram
+            bool data_has_changed = has_sensor_data_changed(&current_data, &last_published_data, SENSOR_CHANGE_THRESHOLD);
+
+            // 3. Decide se deve publicar
+            bool time_for_slow_publish = (now_ms - last_publish_time > MQTT_PUBLISH_INTERVAL_SLOW_MS);
+            bool time_for_fast_publish = data_has_changed && (now_ms - last_publish_time > MQTT_PUBLISH_INTERVAL_FAST_MS);
+
+            if (time_for_slow_publish || time_for_fast_publish) {
+                // Se houver mudança, imprime o motivo do envio
+                if(data_has_changed && !time_for_slow_publish){
+                    printf("Mudança detectada. Enviando dados (intervalo rápido).\n");
+                } else {
+                    printf("Intervalo de tempo atingido. Enviando dados (intervalo lento).\n");
+                }
+                
+                // Atualiza o tempo do último envio
                 last_publish_time = now_ms;
                 
                 static char message[512];
-
+                char timestamp[20]; 
                 
-                if (mpu6050_read_data(&data)) {
-                    char timestamp[20]; 
-                    snprintf(timestamp, sizeof(timestamp),
-                            "%04d-%02d-%02dT%02d:%02d:%02d",
-                            local_tm->tm_year + 1900, local_tm->tm_mon + 1, local_tm->tm_mday,
-                            local_tm->tm_hour, local_tm->tm_min, local_tm->tm_sec);
-                    
-                    snprintf(message, sizeof(message),
-                            "{\"team\":\"%s\",\"device\":\"%s\",\"ip\":\"%s\",\"ssid\":\"%s\",\"sensor\":\"%s\","
-                            "\"data\":{\"accel\":{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f},"
-                            "\"gyro\":{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f},"
-                            "\"temperature\":%.1f},"
-                            "\"timestamp\":\"%s\"}",
-                            team, device, ip_address_str, ssid, sensor,
-                            data.accel_x, data.accel_y, data.accel_z,
-                            data.gyro_x, data.gyro_y, data.gyro_z,
-                            data.temperature, timestamp);
+                // Pega a hora atual (o código já faz isso acima)
+                time_t brasili_time = current_utc_time + BRASILIA_OFFSET_SECONDS;
+                struct tm *local_tm = gmtime(&brasili_time);
 
-                    printf("Publicando %s em '%s'...\n", message, MQTT_TOPIC_STATUS);
+                snprintf(timestamp, sizeof(timestamp),
+                        "%04d-%02d-%02dT%02d:%02d:%02d",
+                        local_tm->tm_year + 1900, local_tm->tm_mon + 1, local_tm->tm_mday,
+                        local_tm->tm_hour, local_tm->tm_min, local_tm->tm_sec);
+                
+                snprintf(message, sizeof(message),
+                        "{\"team\":\"%s\",\"device\":\"%s\",\"ip\":\"%s\",\"ssid\":\"%s\",\"sensor\":\"%s\","
+                        "\"data\":{\"accel\":{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f},"
+                        "\"gyro\":{\"x\":%.2f,\"y\":%.2f,\"z\":%.2f},"
+                        "\"temperature\":%.1f},"
+                        "\"timestamp\":\"%s\"}",
+                        team, device, ip_address_str, ssid, sensor,
+                        current_data.accel_x, current_data.accel_y, current_data.accel_z,
+                        current_data.gyro_x, current_data.gyro_y, current_data.gyro_z,
+                        current_data.temperature, timestamp);
 
-                    if (!mqtt_service_publish(MQTT_TOPIC_STATUS, message, MQTT_QOS, false)){
-                        printf("Falha ao tentar publicar mensagem.\n");
-                    } else {
-                        printf("Mensagem enviada para a fila de publicação.\n");
-                        pisca_led(LED_PIN, 1, 100); // Pisca o LED uma vez para indicar envio
-                    }
+                printf("Publicando %s em '%s'...\n", message, MQTT_TOPIC_STATUS);
+
+                if (!mqtt_service_publish(MQTT_TOPIC_STATUS, message, MQTT_QOS, false)){
+                    printf("Falha ao tentar publicar mensagem.\n");
                 } else {
-                    printf("Falha na leitura do MPU6050, publicação cancelada.\n");
+                    printf("Mensagem enviada para a fila de publicação.\n");
+                    pisca_led(LED_PIN, 1, 100);
+                    // ATUALIZA OS ÚLTIMOS DADOS ENVIADOS
+                    last_published_data = current_data;
                 }
             }
         } else {
@@ -241,4 +277,18 @@ void on_message_received(const char* topic, const char* payload) {
             cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
         }
     }
+}
+
+// <-- ADICIONADO: Função para verificar se os dados do sensor mudaram significativamente
+bool has_sensor_data_changed(mpu6050_data_t* current, mpu6050_data_t* previous, float threshold) {
+    if (fabsf(current->accel_x - previous->accel_x) > threshold ||
+        fabsf(current->accel_y - previous->accel_y) > threshold ||
+        fabsf(current->accel_z - previous->accel_z) > threshold ||
+        fabsf(current->gyro_x - previous->gyro_x) > threshold ||
+        fabsf(current->gyro_y - previous->gyro_y) > threshold ||
+        fabsf(current->gyro_z - previous->gyro_z) > threshold ||
+        fabsf(current->temperature - previous->temperature) > 0.2) { // Limite maior para temperatura
+        return true;
+    }
+    return false;
 }

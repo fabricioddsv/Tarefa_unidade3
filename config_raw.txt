@@ -1,0 +1,1037 @@
+views:
+  - type: sections
+    max_columns: 4
+    title: Prof/Tutores
+    path: prof-tutores
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: PicoW Léo
+          - chart_type: line
+            period: 5minute
+            type: statistics-graph
+            entities:
+              - sensor.temperatura_01
+            stat_types:
+              - mean
+            title: Temperatura Léo 01
+          - chart_type: line
+            period: 5minute
+            type: statistics-graph
+            entities:
+              - sensor.umidade_01
+            stat_types:
+              - min
+            title: Umidade Léo 01
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+          - type: gauge
+            entity: sensor.temperatura_01
+            name: Temp
+          - type: gauge
+            name: Umidade
+            entity: sensor.umidade_01
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+    visible:
+      - user: 2c0a16d4c3844d4d820af6c29b8abdba
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio01
+    path: desafio01
+    visible:
+      - user: 4edc594d8a2b473d8b99a5a181f4a461
+      - user: 3621aaf30e0c4e3ca37614544375bb6b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio02
+    path: desafio02
+    visible:
+      - user: eb477d25c14d415c936ab6987d3a5c33
+      - user: 3621aaf30e0c4e3ca37614544375bb6b
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Rafael Avelino
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.rafael_s_temp
+              - entity: sensor.rafael_s_joy
+            title: Tarefa 2
+            grid_options:
+              columns: full
+          - type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: sensor.rafael_s_mpu_device
+                  - entity: sensor.rafael_s_mpu_ssid
+                  - entity: sensor.rafael_s_mpu_ip
+                  - entity: sensor.rafael_s_mpu_timestamp
+                title: Conexão
+                state_color: false
+                show_header_toggle: false
+              - type: horizontal-stack
+                cards:
+                  - type: history-graph
+                    entities:
+                      - entity: sensor.rafael_s_mpu_accel_x
+                      - entity: sensor.rafael_s_mpu_accel_y
+                      - entity: sensor.rafael_s_mpu_accel_z
+                    logarithmic_scale: false
+                    title: Aceleração (MPU-6050)
+                    hours_to_show: 0.2
+                  - type: horizontal-stack
+                    cards:
+                      - type: history-graph
+                        entities:
+                          - entity: sensor.rafael_s_mpu_gyro_x
+                          - entity: sensor.rafael_s_mpu_gyro_y
+                          - entity: sensor.rafael_s_mpu_gyro_z
+                        logarithmic_scale: false
+                        hours_to_show: 0.2
+                        title: Giroscópio (MPU-6050)
+              - type: gauge
+                entity: sensor.rafael_s_mpu_temp
+                severity:
+                  green: 15
+                  yellow: 37
+                  red: 50
+                needle: true
+                name: Temperatura (MPU-6050)
+            title: Tarefa 3
+            grid_options:
+              columns: full
+              rows: auto
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Stanley Things
+            heading_style: title
+          - show_current: true
+            show_forecast: true
+            type: weather-forecast
+            entity: weather.forecast_casa
+            forecast_type: daily
+            name: Laica CNAT
+          - show_name: true
+            show_icon: true
+            type: button
+            entity: ''
+            name: Não clique aqui
+            icon: mdi:alarm-light
+            tap_action:
+              action: url
+              url_path: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+          - type: entities
+            entities:
+              - entity: sensor.stanley_joy
+              - entity: sensor.stanley_temp
+      - type: grid
+        cards:
+          - type: heading
+            heading: Diogo Sena
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.diogo_joy
+              - entity: sensor.diogo_temp
+              - entity: sensor.diogo_acelerometro_x
+              - entity: sensor.diogo_acelerometro_y
+              - entity: sensor.diogo_acelerometro_z
+              - entity: sensor.diogo_giroscopio_x
+              - entity: sensor.diogo_giroscopio_y
+              - entity: sensor.diogo_giroscopio_z
+    header:
+      card:
+        type: markdown
+        content: |-
+          # Olá {{ user }} 
+           Adicione seu texto aqui, variáveis de modelo são suportadas ✨
+        text_only: true
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio03
+    path: desafio03
+    visible:
+      - user: bd49ab7ce0a24bba9150d62ca3665b1e
+      - user: 3621aaf30e0c4e3ca37614544375bb6b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Matheus Dionísio
+            icon: mdi:account
+          - chart_type: line
+            period: hour
+            type: statistics-graph
+            entities: []
+            stat_types: []
+            title: 'Temperatura '
+      - type: grid
+        cards:
+          - type: heading
+            heading: José Francisco
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.jose_f_sensor
+              - entity: sensor.jose_f_ssid
+              - entity: sensor.jose_f_ip
+              - entity: sensor.jose_f_temp_mpu
+              - entity: sensor.jose_f_timestamp
+            title: Conexão
+          - type: entities
+            entities:
+              - entity: sensor.jose_f_acelerometro_x
+              - entity: sensor.jose_f_acelerometro_y
+              - entity: sensor.jose_f_acelerometro_z
+            state_color: false
+            show_header_toggle: false
+          - type: entities
+            entities:
+              - entity: sensor.jose_f_giroscopio_x
+              - entity: sensor.jose_f_giroscopio_y
+              - entity: sensor.jose_f_giroscopio_z
+            show_header_toggle: true
+            state_color: false
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio04
+    path: desafio04
+    visible:
+      - user: 258254ddacff4804a26f3b4d8c861d50
+      - user: 3621aaf30e0c4e3ca37614544375bb6b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio06
+    path: desafio06
+    visible:
+      - user: 36a4910bfbd142fa8626338189725c37
+      - user: 3621aaf30e0c4e3ca37614544375bb6b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Márcio Douglas
+            heading_style: title
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio05
+    path: desafio05
+    visible:
+      - user: a46befecbbcd413eb7b1bbd3ab85468e
+      - user: 3621aaf30e0c4e3ca37614544375bb6b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Antônio Irineu Filho
+            heading_style: title
+            icon: mdi:account
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio07
+    path: desafio07
+    visible:
+      - user: 63c63bf1d00e47b49d1f2c573ffc4ac3
+      - user: 3621aaf30e0c4e3ca37614544375bb6b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio08
+    path: desafio08
+    visible:
+      - user: 8668cce7999c4e138212f965052c85e4
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Thalys
+            heading_style: title
+          - type: tile
+            entity: sensor.thalys_device_status
+          - type: tile
+            entity: sensor.thalys_mpu_accel_x
+          - type: tile
+            entity: sensor.thalys_mpu_accel_y
+          - type: tile
+            entity: sensor.thalys_mpu_accel_z
+          - type: tile
+            entity: sensor.thalys_mpu_gyro_x
+          - type: tile
+            entity: sensor.thalys_mpu_gyro_y
+          - type: tile
+            entity: sensor.thalys_mpu_gyro_z
+          - type: tile
+            entity: sensor.thalys_mpu_temperatura
+          - type: tile
+            entity: sensor.thalys_sensor_type
+          - type: tile
+            entity: sensor.thalys_team
+          - type: tile
+            entity: sensor.thalys_timestamp
+          - type: tile
+            entity: sensor.thalys_wifi_ssid
+      - type: grid
+        cards:
+          - type: heading
+            heading: Erikson
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.team_erikson
+                icon: mdi:account-group
+              - entity: sensor.device_erikson
+                icon: mdi:devices
+              - entity: sensor.erikson_ip_do_pico
+                icon: mdi:ip
+              - entity: sensor.rede_erikson
+                icon: mdi:wifi-strength-4
+              - entity: sensor.hora_erikson
+                icon: mdi:alarm-check
+              - entity: sensor.sensor_erikson
+                icon: mdi:motion-sensor
+          - type: entities
+            entities:
+              - entity: sensor.erikson_accel_x
+                icon: mdi:axis-x-arrow
+              - entity: sensor.erikson_accel_y
+                icon: mdi:axis-y-arrow
+              - entity: sensor.erikson_accel_z
+                icon: mdi:axis-z-arrow
+            title: Acelerômetro
+          - type: entities
+            entities:
+              - entity: sensor.erikson_giro_x
+                icon: mdi:axis-x-rotate-clockwise
+              - entity: sensor.erikson_giro_y
+                icon: mdi:axis-y-rotate-clockwise
+              - entity: sensor.erikson_giro_z
+                icon: mdi:axis-z-rotate-clockwise
+          - type: gauge
+            entity: sensor.erikson_temperatura
+            needle: true
+            name: Temperatura (sensor de erikson)
+            unit: °C
+            severity:
+              green: 20
+              yellow: 40
+              red: 50
+            tap_action:
+              action: perform-action
+              perform_action: ''
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: João
+            heading_style: title
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Olá {{ user }} 
+           Adicione seu texto aqui, variáveis de modelo são suportadas ✨
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio09
+    path: desafio09
+    visible:
+      - user: 4c011b400e3042908b30e431b31cfbeb
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: João
+            heading_style: title
+          - type: tile
+            entity: sensor.backup_backup_manager_state
+            features_position: bottom
+            vertical: false
+            name: temperatura
+            icon: mdi:hydraulic-oil-temperature
+            color: primary
+      - type: grid
+        cards:
+          - type: heading
+            heading: Danilo Santos
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.danilo_joy
+            state_color: false
+            show_header_toggle: true
+            title: Posição do Joystick
+          - type: gauge
+            entity: sensor.danilo_temp
+            needle: true
+            min: 0
+            severity:
+              green: 10
+              yellow: 20
+              red: 30
+            name: Temperatura do sensor MPU-6050
+            unit: ºC
+            max: 60
+          - type: entities
+            entities:
+              - entity: sensor.danilo_mpu_accel_x
+              - entity: sensor.danilo_mpu_accel_y
+              - entity: sensor.danilo_mpu_accel_z
+              - entity: sensor.danilo_mpu_gyro_x
+              - entity: sensor.danilo_mpu_gyro_y
+              - entity: sensor.danilo_mpu_gyro_z_2
+            title: MPU-6050
+          - type: tile
+            entity: sensor.bitdoglab_mpu_ultima_leitura
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: full
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            badges:
+              - type: entity
+                entity: sensor.ubiracy_joy
+            heading: Ubiracy_Joy
+          - type: tile
+            entity: sensor.ubiracy_joy
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.ubiracy_temp
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lucas
+            heading_style: title
+            icon: mdi:arrow-oscillating
+            grid_options:
+              columns: full
+              rows: 1
+          - type: entities
+            entities:
+              - entity: sensor.lucas_giroscopio_x
+              - entity: sensor.lucas_giroscopio_y
+              - entity: sensor.lucas_giroscopio_z
+          - type: entities
+            entities:
+              - entity: sensor.lucas_acelerometro_x
+              - entity: sensor.lucas_acelerometro_y
+              - entity: sensor.lucas_acelerometro_z
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio10
+    path: desafio10
+    visible:
+      - user: 85611ab8ea16402e84dae3fea4883f18
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Mario Marques (teste HAOS)
+          - type: entities
+            entities:
+              - entity: sensor.mario_temperatura
+              - entity: sensor.mario_joystick
+              - entity: sensor.sun_next_noon
+      - type: grid
+        cards:
+          - type: heading
+            heading: Carla Alves
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.carla_joystick
+              - entity: sensor.carla_temperatura
+            title: Tarefa 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Izabelle Medeiros
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.izabelle_joystick
+              - entity: sensor.izabelle_temperatura
+            title: Tarefa 2 - Joy e temperatura
+          - type: entities
+            entities:
+              - entity: sensor.izabelle_acelerometro_x
+              - entity: sensor.izabelle_acelerometro_y
+              - entity: sensor.izabelle_acelerometro_z
+              - entity: sensor.izabelle_giroscopio_x
+              - entity: sensor.izabelle_giroscopio_y
+              - entity: sensor.izabelle_giroscopio_z
+            title: Tarefa 3 - MPU6050
+          - type: history-graph
+            entities:
+              - entity: sensor.izabelle_acelerometro_x
+              - entity: sensor.izabelle_acelerometro_y
+              - entity: sensor.izabelle_acelerometro_z
+            title: Tarefa 3 - Acelerômetro - MPU6050
+            hours_to_show: 1
+          - type: history-graph
+            entities:
+              - entity: sensor.izabelle_giroscopio_x
+              - entity: sensor.izabelle_giroscopio_y
+              - entity: sensor.izabelle_giroscopio_z
+            title: Tarefa 3 - Giroscópio - MPU6050
+            hours_to_show: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading: Cauã Brito
+            heading_style: title
+            icon: mdi:account
+          - chart_type: line
+            period: 5minute
+            type: statistics-graph
+            entities: []
+            stat_types:
+              - mean
+              - min
+              - max
+            title: Acaua Temperatura
+            hide_legend: true
+    cards: []
+  - type: sections
+    max_columns: 4
+    title: Desafio11
+    path: desafio11
+    visible:
+      - user: ab832dae39f24cecb5bb3fbc21005d7c
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+          - type: tile
+            entity: sensor.marina_mpu_accel_x
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.marina_mpu_gyro_x
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.marina_mpu_accel_y
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.marina_mpu_gyro_y
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.marina_mpu_accel_z
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.marina_mpu_gyro_z
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.marina_temperature_c
+            features_position: bottom
+            vertical: false
+        column_span: 1
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+          - type: history-graph
+            entities:
+              - entity: sensor.marina_mpu_accel_x
+            title: Gráfico Aceleração - Eixo X
+            hours_to_show: 5
+          - type: history-graph
+            entities:
+              - entity: sensor.marina_mpu_accel_y
+            title: Gráfico Aceleração - Eixo y
+            hours_to_show: 5
+          - type: history-graph
+            entities:
+              - entity: sensor.marina_mpu_accel_z
+            title: Gráfico Aceleração - Eixo Z
+            hours_to_show: 5
+          - type: history-graph
+            entities:
+              - entity: sensor.marina_temperature_c
+            title: Gráfico Temperatura
+            hours_to_show: 5
+        column_span: 2
+    header:
+      card:
+        type: markdown
+        text_only: true
+        content: |-
+          # Olá {{ user }} 
+           Adicione seu texto aqui, variáveis de modelo são suportadas ✨
+  - type: sections
+    max_columns: 4
+    title: Desafio12
+    path: desafio12
+    visible:
+      - user: 819ae11eef7e4c8fb594d74e2c208b34
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Luís Coutinho
+            heading_style: title
+            icon: mdi:account
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Ermerson Gomes
+            icon: mdi:account
+    header:
+      card:
+        type: markdown
+        content: '# {{ user }}'
+        text_only: true
+  - type: sections
+    max_columns: 4
+    title: Desafio13
+    path: desafio13
+    visible:
+      - user: aeb1e03a66be4f16925d356e904d2ea3
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: José.Simplício
+            icon: mdi:wizard-hat
+            grid_options:
+              columns: 12
+              rows: 1
+          - type: gauge
+            entity: sensor.higo_temperatura
+            name: Temperatura
+            max: 60
+            needle: false
+            min: 10
+          - type: entities
+            entities:
+              - entity: sensor.higo_joystick
+          - type: entities
+            entities:
+              - entity: sensor.higo_acelerometro_eixo_x
+              - entity: sensor.higo_acelerometro_eixo_y
+              - entity: sensor.higo_acelerometro_eixo_z
+          - type: entities
+            entities:
+              - entity: sensor.higo_giroscopio_eixo_x
+              - entity: sensor.higo_giroscopio_eixo_y
+              - entity: sensor.higo_giroscopio_eixo_z
+          - type: statistics-graph
+            entities:
+              - sensor.higo_acelerometro_eixo_x
+              - sensor.higo_acelerometro_eixo_y
+              - sensor.higo_acelerometro_eixo_z
+          - type: history-graph
+            entities:
+              - entity: sensor.higo_giroscopio_eixo_x
+              - entity: sensor.higo_giroscopio_eixo_y
+              - entity: sensor.higo_giroscopio_eixo_z
+          - type: entities
+            entities:
+              - entity: sensor.wesley_temperatura
+      - type: grid
+        cards:
+          - type: heading
+            heading: Fellipe Brito
+            heading_style: title
+            icon: mdi:account
+          - type: entities
+            entities:
+              - entity: sensor.fellipe_accel_x
+              - entity: sensor.fellipe_accel_y
+              - entity: sensor.fellipe_accel_z
+            show_header_toggle: false
+            title: Acelerômetro
+          - type: entities
+            entities:
+              - entity: sensor.fellipe_gyro_x
+              - entity: sensor.fellipe_gyro_y
+              - entity: sensor.fellipe_gyro_z
+            title: Giroscópio
+      - type: grid
+        cards:
+          - type: heading
+            heading: Wesley_Santos
+            heading_style: title
+          - type: entities
+            entities:
+              - entity: sensor.wesley_aceleracao_x
+              - entity: sensor.wesley_aceleracao_y
+              - entity: sensor.wesley_aceleracao_z
+              - entity: sensor.wesley_giroscopio_x
+              - entity: sensor.wesley_giroscopio_y
+              - entity: sensor.wesley_giroscopio_z
+              - entity: sensor.wesley_temperatura
+  - type: sections
+    max_columns: 4
+    title: Desafio15
+    path: desafio15
+    visible:
+      - user: 928d3f6aaf0441c3bb974914dfbcd2c7
+      - user: f1020b8710ef48d884696be9aabdac0b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Fabrício Domingos
+            heading_style: title
+          - type: vertical-stack
+            cards:
+              - type: history-graph
+                entities:
+                  - entity: sensor.fabricio_temperatura_mpu6050
+                title: Temperatura MPU6050
+                hours_to_show: 2
+              - square: true
+                type: grid
+                columns: 2
+                cards:
+                  - type: gauge
+                    entity: sensor.fabricio_temperatura_mpu6050
+                    name: Temperatura
+                    needle: true
+                    severity:
+                      green: 0
+                      yellow: 60
+                      red: 75
+                    min: 20
+                    max: 90
+                  - type: tile
+                    entity: sensor.fabricio_temperatura_mpu6050
+                    features_position: bottom
+                    vertical: false
+                grid_options:
+                  columns: 12
+                  rows: 2
+                title: Temperatura de funcionamento
+          - type: vertical-stack
+            cards:
+              - type: history-graph
+                entities:
+                  - entity: sensor.fabricio_acelerometro_x
+                  - entity: sensor.fabricio_acelerometro_y
+                  - entity: sensor.fabricio_acelerometro_z
+                title: Acelerômetro
+                hours_to_show: 2
+              - type: history-graph
+                title: Histórico de Atividade (Últimas 24h)
+                entities:
+                  - entity: binary_sensor.fabricio_em_movimento
+                    name: Movement Hist.
+              - type: tile
+                entity: binary_sensor.fabricio_em_movimento
+                name: Status de Movimento
+                features_position: bottom
+                vertical: false
+          - type: vertical-stack
+            cards:
+              - type: history-graph
+                entities:
+                  - entity: sensor.fabricio_giroscopio_x
+                  - entity: sensor.fabricio_giroscopio_y
+                  - entity: sensor.fabricio_giroscopio_z
+                title: Giroscópio
+                hours_to_show: 2
+              - type: grid
+                columns: 2
+                cards:
+                  - type: gauge
+                    name: Inclinação X (Pitch)
+                    entity: sensor.fabricio_inclinacao_x_pitch
+                    min: -90
+                    max: 90
+                    needle: true
+                  - type: gauge
+                    name: Inclinação Y (Roll)
+                    entity: sensor.fabricio_inclinacao_y_roll
+                    min: -90
+                    max: 90
+                    needle: true
+          - type: vertical-stack
+            cards:
+              - type: grid
+                square: false
+                title: Sensor MPU6050 (Pico W)
+                columns: 3
+                cards:
+                  - type: tile
+                    entity: sensor.fabricio_acelerometro_x
+                    name: Acel. X
+                    features_position: bottom
+                    vertical: false
+                  - type: tile
+                    entity: sensor.fabricio_acelerometro_y
+                    name: Acel. Y
+                  - type: tile
+                    entity: sensor.fabricio_acelerometro_z
+                    name: Acel. Z
+                  - type: tile
+                    entity: sensor.fabricio_giroscopio_x
+                    name: Giro. X
+                  - type: tile
+                    entity: sensor.fabricio_giroscopio_y
+                    name: Giro. Y
+                  - type: tile
+                    entity: sensor.fabricio_giroscopio_z
+                    name: Giro. Z
+                grid_options:
+                  columns: 12
+                  rows: 1
+              - show_name: true
+                show_icon: true
+                type: button
+                entity: switch.pico_w_led_fabricio
+                show_state: true
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Marcos Silva
+            heading_style: title
+            icon: mdi:account
+            grid_options:
+              columns: full
+              rows: 1
+          - type: vertical-stack
+            title: Acelerômetro
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: history-graph
+                    entities:
+                      - entity: sensor.marcos_silva_acelerometro_x
+                        name: Eixo x
+                      - entity: sensor.marcos_silva_acelerometro_y
+                        name: Eixo y
+                      - entity: sensor.marcos_silva_acelerometro_z
+                        name: Eixo y
+                    hours_to_show: 2
+                  - type: vertical-stack
+                    cards:
+                      - type: tile
+                        entity: sensor.marcos_silva_acelerometro_x
+                        name: Eixo X
+                        color: purple
+                      - type: tile
+                        entity: sensor.marcos_silva_acelerometro_y
+                        name: Eixo Y
+                        color: purple
+                      - type: tile
+                        entity: sensor.marcos_silva_acelerometro_z
+                        name: Eixo z
+                        color: purple
+            grid_options:
+              columns: 24
+              rows: auto
+          - type: vertical-stack
+            title: Giroscópio
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: history-graph
+                    entities:
+                      - entity: sensor.marcos_silva_giroscopio_x
+                        name: Eixo x
+                      - entity: sensor.marcos_silva_giroscopio_y
+                        name: Eixo y
+                      - entity: sensor.marcos_silva_giroscopio_z
+                        name: Eixo y
+                    hours_to_show: 2
+                  - type: vertical-stack
+                    cards:
+                      - type: tile
+                        entity: sensor.marcos_silva_giroscopio_x
+                        name: Eixo X
+                        color: indigo
+                      - type: tile
+                        entity: sensor.marcos_silva_giroscopio_y
+                        name: Eixo Y
+                        color: indigo
+                      - type: tile
+                        entity: sensor.marcos_silva_giroscopio_z
+                        name: Eixo z
+                        color: indigo
+            grid_options:
+              columns: 24
+              rows: auto
+          - type: horizontal-stack
+            cards:
+              - type: history-graph
+                entities:
+                  - entity: sensor.marcos_silva_temperatura
+                title: Histórico
+                hours_to_show: 2
+              - type: vertical-stack
+                cards:
+                  - type: gauge
+                    entity: sensor.marcos_silva_temperatura
+                    name: Temperatura Atual
+                    needle: true
+                    severity:
+                      blue: 0
+                      green: 20
+                      yellow: 60
+                      red: 75
+                    min: 0
+                    max: 90
+                  - type: tile
+                    entity: sensor.marcos_silva_temperatura
+                    color: violet
+                    features_position: bottom
+                    vertical: false
+            grid_options:
+              columns: 24
+              rows: auto
+            title: Temperatura
+        column_span: 4
+    header:
+      card:
+        type: markdown
+        content: |
+          # Olá {{ user }} 
+  - type: sections
+    max_columns: 4
+    title: Desafio16
+    path: desafio16
+    visible:
+      - user: 21bef0dca0654321a08b9c01d74373b7
+      - user: f1020b8710ef48d884696be9aabdac0b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+  - type: sections
+    max_columns: 4
+    title: Desafio14
+    path: desafio14
+    visible:
+      - user: 10c288ff10e54ee6be3c6dd1def75a32
+      - user: 7a0581b0652149659dd17649ff7d0e01
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+  - type: sections
+    max_columns: 4
+    title: Desafio17
+    path: desafio17
+    visible:
+      - user: 554d8a13bea24f47b6b497fb33170f06
+      - user: f1020b8710ef48d884696be9aabdac0b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+  - type: sections
+    max_columns: 4
+    title: Desafio18
+    path: desafio18
+    visible:
+      - user: 60874f381b664301a99eca1eb5600c27
+      - user: f1020b8710ef48d884696be9aabdac0b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+  - type: sections
+    max_columns: 4
+    title: Desafio19
+    path: desafio19
+    visible:
+      - user: f1020b8710ef48d884696be9aabdac0b
+      - user: 4ceb4c1e77af453086fb28bb768051c2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nova seção
+  - type: sections
+    max_columns: 4
+    title: Desafio20
+    path: desafio20
+    visible:
+      - user: 6b2742f9ef464d39846f3f2f6fef07b6
+      - user: f1020b8710ef48d884696be9aabdac0b
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lucas Eduardo
+            heading_style: title
+          - type: tile
+            entity: sensor.lucas_e_mpu_6050_aceleracao_x
+            features_position: bottom
+            vertical: false
+          - type: tile
+            entity: sensor.lucas_e_mpu_6050_aceleracao_y
+          - type: tile
+            entity: sensor.lucas_e_mpu_6050_aceleracao_z
+          - type: tile
+            entity: sensor.lucas_e_mpu_6050_giroscopio_x
+          - type: tile
+            entity: sensor.lucas_e_mpu_6050_giroscopio_y
+          - type: tile
+            entity: sensor.lucas_e_mpu_6050_giroscopio_z
+          - type: tile
+            entity: sensor.lucas_e_mpu_6050_temperatura
+
