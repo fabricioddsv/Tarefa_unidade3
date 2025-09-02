@@ -1,0 +1,141 @@
+#   Não apaguem configurações dos outros alunos
+#   Sempre adicione a sua configuração, apenas nesse arquivo
+#   Se for criar outro modelo, diferente de "sensor" adicione no final do arquivo, antes veja se já existe. 
+#   Leonardo Amorim 02/09/2025
+#
+
+################################################################################
+#           TIPO SENSOR
+################################################################################
+sensor:
+################################################################################
+############################# Danilo ####################################
+  - state_class: measurement
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    name: "Danilo Temp"
+    value_template: "{{value_json.data.temp}}"
+    icon: mdi:thermometer
+    
+  - state_topic: "ha/desafio09/danilo.santos/joy"
+    name: "Danilo Joy"
+    value_template: "{{value_json.joystick}}"
+    icon: mdi:gamepad-round
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    name: "Danilo MPU Accel X"
+    unit_of_measurement: "g"
+    value_template: "{{value_json.data.accel.x}}"
+    icon: mdi:axis-x-arrow
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    name: "Danilo MPU Accel Y"
+    unit_of_measurement: "g"
+    value_template: "{{value_json.data.accel.y}}"
+    icon: mdi:axis-y-arrow
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    name: "Danilo MPU Accel Z"
+    unit_of_measurement: "g"
+    value_template: "{{value_json.data.accel.z}}"
+    icon: mdi:axis-z-arrow
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    name: "Danilo MPU Gyro X"
+    unit_of_measurement: "°/s"
+    value_template: "{{value_json.data.gyro.x}}"
+    icon: mdi:axis-x-rotate-clockwise
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    name: "Danilo MPU Gyro Y"
+    unit_of_measurement: "°/s"
+    value_template: "{{value_json.data.gyro.y}}"
+    icon: mdi:axis-y-rotate-clockwise
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    name: "Danilo MPU Gyro Z"
+    unit_of_measurement: "°/s"
+    value_template: "{{value_json.data.gyro.z}}"
+    icon: mdi:axis-z-rotate-clockwise
+    
+  - name: "BitDogLab MPU Última Leitura"
+    state_topic: "ha/desafio09/danilo.santos/mpu6050"
+    # Extrai o valor de: data -> timestamp
+    value_template: "{{ value_json.data.timestamp }}"
+    # Define a classe do dispositivo para que o Home Assistant o reconheça como data/hora
+    device_class: "timestamp"
+
+################################################################################
+############################# Marina Leite ####################################
+  - state_class: measurement
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina Temp"
+    value_template: "{{value_json.data.temp}}"
+    icon: mdi:thermometer
+    
+  - state_topic: "ha/desafio11/marina.leite/joy"
+    name: "Marina Joy"
+    value_template: "{{value_json.joystick}}"
+    icon: mdi:gamepad-round
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina MPU Accel X"
+    unit_of_measurement: "g"
+    value_template: "{{value_json.data.accel.x}}"
+    icon: mdi:axis-x-arrow
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina MPU Accel Y"
+    unit_of_measurement: "g"
+    value_template: "{{value_json.data.accel.y}}"
+    icon: mdi:axis-y-arrow
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina Temperature C"
+    unit_of_measurement: "C"
+    value_template: "{{value_json.data.temperature}}"
+    icon: mdi:temperature-celsius
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina MPU Accel Z"
+    unit_of_measurement: "g"
+    value_template: "{{value_json.data.accel.z}}"
+    icon: mdi:axis-z-arrow
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina MPU Gyro X"
+    unit_of_measurement: "°/s"
+    value_template: "{{value_json.data.gyro.x}}"
+    icon: mdi:axis-x-rotate-clockwise
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina MPU Gyro Y"
+    unit_of_measurement: "°/s"
+    value_template: "{{value_json.data.gyro.y}}"
+    icon: mdi:axis-y-rotate-clockwise
+    
+  - state_class: "measurement"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    name: "Marina MPU Gyro Z"
+    unit_of_measurement: "°/s"
+    value_template: "{{value_json.data.gyro.z}}"
+    icon: mdi:axis-z-rotate-clockwise
+    
+  - name: "BitDogLab MPU Última Leitura"
+    state_topic: "ha/desafio11/marina.leite/mpu6050"
+    # Extrai o valor de: data -> timestamp
+    value_template: "{{ value_json.data.timestamp }}"
+    # Define a classe do dispositivo para que o Home Assistant o reconheça como data/hora
+    device_class: "timestamp"
+
