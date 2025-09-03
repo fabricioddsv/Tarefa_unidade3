@@ -34,6 +34,8 @@ client.username_pw_set(username, password)
 # Define a função de callback para o evento de conexão
 client.on_connect = on_connect 
 
+accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temperature  = 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 40
+
 # Tenta conectar ao broker
 try:
     print(f"Conectando ao broker {broker_address}...")
@@ -53,15 +55,15 @@ try:
     while True:
         # --- Simulação de Dados Variáveis ---
         # Gera valores aleatórios para simular as leituras do sensor MPU-6050
-        accel_x = round(random.uniform(-10.0, 10.0), 2)
-        accel_y = round(random.uniform(-10.0, 10.0), 2)
-        accel_z = round(random.uniform(-10.0, 10.0), 2)
+        accel_x = round(random.uniform( (accel_x-2), (accel_x+2) ), 2)
+        accel_y = round(random.uniform( (accel_y-2), (accel_y+2) ), 2)
+        accel_z = round(random.uniform( (accel_z-2), (accel_z+2) ), 2)
 
-        gyro_x = round(random.uniform(-5.0, 5.0), 2)
-        gyro_y = round(random.uniform(-5.0, 5.0), 2)
-        gyro_z = round(random.uniform(-5.0, 5.0), 2)
+        gyro_x = round(random.uniform( (gyro_x-1), (gyro_x+1) ), 2)
+        gyro_y = round(random.uniform( (gyro_y-1), (gyro_y+1) ), 2)
+        gyro_z = round(random.uniform( (gyro_z-1), (gyro_z+1) ), 2)
 
-        temperature = round(random.uniform(25.0, 50.0), 1)
+        temperature = round(random.uniform( (temperature - 1), (temperature + 1)), 1)
 
         # Obtém o timestamp atual no formato ISO 8601
         # Usando a data atual, conforme o exemplo original, não 2025.
